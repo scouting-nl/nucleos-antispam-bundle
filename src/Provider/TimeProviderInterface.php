@@ -29,6 +29,7 @@ interface TimeProviderInterface
      * Check if the form is valid.
      *
      * @return bool $valid
+     * @param array<string, mixed> $options
      */
     public function isValid(string $name, array $options): bool;
 }

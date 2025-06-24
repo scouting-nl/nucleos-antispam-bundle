@@ -44,10 +44,13 @@ final class AntiSpamTimeListener implements EventSubscriberInterface
     private $translator;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $options;
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(TimeProviderInterface $timeProvider, TranslatorInterface $translator, array $options)
     {
         $this->timeProvider      = $timeProvider;
@@ -80,6 +83,10 @@ final class AntiSpamTimeListener implements EventSubscriberInterface
         $this->timeProvider->removeFormProtection($form->getName());
     }
 
+    /**
+     * @template TData
+     * @param FormInterface<TData> $form
+     */
     private function isApplicableToForm(FormInterface $form): bool
     {
         return $form->isRoot() && null !== $form->getConfig()->getOption('compound');

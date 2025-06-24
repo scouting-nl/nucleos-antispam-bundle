@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class NucleosAntiSpamExtension extends Extension
 {
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'nucleos_antispam';
     }
@@ -36,15 +36,16 @@ final class NucleosAntiSpamExtension extends Extension
         $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
+        /** @var array{twig: array{mail: array<string, string>}, honeypot: array{provider: string}, time: mixed} $config */
         $this->configureTwig($config, $container);
         $this->configureTime($container, $config);
         $this->configureHoneypot($container, $config);
     }
 
     /**
-     * @param array $config
+     * @param array{twig: array{mail: array<string, string>}} $config
      */
-    private function configureTwig($config, ContainerBuilder $container): void
+    private function configureTwig(array $config, ContainerBuilder $container): void
     {
         $container->setParameter('nucleos_antispam.twig.mail_css_class', $config['twig']['mail']['css_class']);
         $container->setParameter('nucleos_antispam.twig.mail_at_text', $config['twig']['mail']['at_text']);
@@ -52,7 +53,7 @@ final class NucleosAntiSpamExtension extends Extension
     }
 
     /**
-     * @param array<mixed> $config
+     * @param array{time: mixed} $config
      */
     private function configureTime(ContainerBuilder $container, array $config): void
     {
@@ -63,7 +64,7 @@ final class NucleosAntiSpamExtension extends Extension
     }
 
     /**
-     * @param array<mixed> $config
+     * @param array{honeypot: array{provider: string}} $config
      */
     private function configureHoneypot(ContainerBuilder $container, array $config): void
     {

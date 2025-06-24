@@ -62,6 +62,7 @@ final class AntiSpamHoneypotListener implements EventSubscriberInterface
             return;
         }
 
+        /** @var array<string, bool|float|int|string|null> $data */
         $data = $event->getData();
 
         // Honeypot trap hit
@@ -70,7 +71,7 @@ final class AntiSpamHoneypotListener implements EventSubscriberInterface
         }
 
         // Remove honeypot
-        if (\is_array($data)) {
+        if (\is_array($data)) {         // @phpstan-ignore-line
             unset($data[$this->fieldName]);
         }
 

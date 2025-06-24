@@ -36,6 +36,9 @@ final class SessionTimeProvider implements TimeProviderInterface
         $this->session->set($key, $startTime);
     }
 
+    /**
+     * @param array<string, bool|float|int|string|null> $options
+     */
     public function isValid(string $name, array $options): bool
     {
         $startTime = $this->getFormTime($name);
@@ -83,7 +86,9 @@ final class SessionTimeProvider implements TimeProviderInterface
         $key = $this->getSessionKey($name);
 
         if ($this->hasFormProtection($name)) {
-            return $this->session->get($key);
+            $dateTime = $this->session->get($key);
+            /** @var \DateTime $dateTime */
+            return $dateTime;
         }
 
         return null;
@@ -95,7 +100,7 @@ final class SessionTimeProvider implements TimeProviderInterface
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string, bool|float|int|string|null> $options
      */
     private function violatesMin(DateTime $value, DateTimeImmutable $currentTime, array $options): bool
     {
@@ -112,7 +117,7 @@ final class SessionTimeProvider implements TimeProviderInterface
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string, bool|float|int|string|null> $options
      */
     private function violatesMax(DateTime $value, DateTimeImmutable $currentTime, array $options): bool
     {

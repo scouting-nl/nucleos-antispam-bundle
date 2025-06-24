@@ -19,11 +19,13 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 final class NucleosAntiSpamBundle extends Bundle
 {
-    public function getContainerExtension(): ?ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface
     {
         if (null === $this->extension) {
             $this->extension = new NucleosAntiSpamExtension();
         }
+
+        \assert($this->extension instanceof ExtensionInterface);
 
         return $this->extension;
     }

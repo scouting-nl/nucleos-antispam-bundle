@@ -40,6 +40,9 @@ final class TimeFormExtension extends AbstractTypeExtension
      */
     private $defaults;
 
+    /**
+     * @param array<string, mixed> $defaults
+     */
     public function __construct(TimeProviderInterface $timeProvider, TranslatorInterface $translator, array $defaults)
     {
         $this->timeProvider      = $timeProvider;

@@ -37,12 +37,18 @@ final class HoneypotFormExtension extends AbstractTypeExtension
      */
     private $defaults;
 
+    /**
+     * @param array<string, mixed> $defaults
+     */
     public function __construct(TranslatorInterface $translator, array $defaults)
     {
         $this->translator        = $translator;
         $this->defaults          = $defaults;
     }
 
+    /**
+     * @param array{antispam_honeypot: bool, antispam_honeypot_field: string} $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (true !== $options['antispam_honeypot']) {
@@ -55,6 +61,9 @@ final class HoneypotFormExtension extends AbstractTypeExtension
         ;
     }
 
+    /**
+     * @param array{antispam_honeypot: bool, antispam_honeypot_field: string, compound: bool} $options
+     */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if (null !== $view->parent || true !== $options['antispam_honeypot'] || true !== $options['compound']) {
@@ -101,6 +110,10 @@ final class HoneypotFormExtension extends AbstractTypeExtension
         ];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
     private function createViewOptions(array $options): array
     {
         $formOptions = [
